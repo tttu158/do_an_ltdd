@@ -1,4 +1,5 @@
 import 'package:do_an/bottom_navigator/home.dart';
+import 'package:do_an/bottom_navigator/profile.dart';
 import 'package:do_an/bottom_navigator/shopping.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class _BottomState extends State<Bottom> {
   final pages = [
     HomePage(),
     ShoppingPage(),
+    ProfileUser(),
   ];
 
   @override
