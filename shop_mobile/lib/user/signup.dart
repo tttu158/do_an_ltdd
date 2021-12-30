@@ -2,17 +2,18 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  _SignupState createState() => _SignupState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignupState extends State<Signup> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
@@ -22,54 +23,149 @@ class _SignupState extends State<Signup> {
               height: 50,
             ),
             Container(
-              child: Image.asset('images/logo.png'),
+              child: Image.asset('images/icon/logo.jpg'),
             ),
             const SizedBox(
               height: 20,
             ),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: const TextField(
                 keyboardType: TextInputType.text,
-                style: TextStyle(color: Colors.black87),
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.only(top: 14),
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: Color(0xff2D3132),
-                    ),
-                    hintText: 'Họ và tên',
-                    hintStyle: TextStyle(color: Colors.black38)),
+                    hintText: '  Họ và tên',
+                    
+                    hintStyle: TextStyle(color: Colors.black38,fontSize: 20)),
+                    
               ),
             ),
+            SizedBox(height:9),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: const TextField(
                 keyboardType: TextInputType.text,
                 style: TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.only(top: 14),
-                    prefixIcon: Icon(
-                      Icons.https,
-                      color: Color(0xff2D3132),
-                    ),
-                    hintText: 'Địa chỉ mail',
-                    hintStyle: TextStyle(color: Colors.black38)),
+                    hintText: '  Địa chỉ mail ....',
+                     hintStyle: TextStyle(color: Colors.black38,fontSize: 20)),
+              ),
+            ),
+              Row(
+              children: [
+                SizedBox(width: 10,),
+                Container(
+                  width: 182,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  child: const TextField(
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 14),
+                        hintText: '  Mật khẩu',
+                        
+                    hintStyle: TextStyle(color: Colors.black38,fontSize: 18)),
+                  ),
+                ),
+                Container(
+                  width: 190,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  child: const TextField(
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 14),
+                        hintText: '  Xác nhận mật khẩu',
+                         
+                       hintStyle: TextStyle(color: Colors.black38,fontSize: 18)),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: const TextField(
+                keyboardType: TextInputType.text,
+                style: TextStyle(color: Colors.black87),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.only(top: 14),
+                    hintText: '  Chọn tỉnh thành phố',
+                      suffixIcon:Icon(Icons.keyboard_arrow_down),
+                     hintStyle: TextStyle(color: Colors.black38,fontSize: 20)),
+              ),
+            ),
+             Row(
+              children: [
+                SizedBox(width: 10,),
+                Container(
+                  width: 182,
+                  height:60,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  child:  TextField(
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black87),
+                    
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                         
+                        ),
+                        contentPadding: EdgeInsets.only(top: 14),
+                        hintText: '  Quận/Huyện',
+                    suffixIcon:Icon(Icons.keyboard_arrow_down),
+                      hintStyle: TextStyle(color: Colors.black38,fontSize: 18)),
+                  ),
+                 
+                ),
+                 Container(
+                  width: 190,
+                  height:60,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  child: const TextField(
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(color: Colors.black87),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.only(top: 14),
+                        hintText: '  Phường/Xã',
+                    suffixIcon:Icon(Icons.keyboard_arrow_down),
+                      hintStyle: TextStyle(color: Colors.black38,fontSize: 18)),
+                  ),
+                 
+                ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: const TextField(
+                keyboardType: TextInputType.text,
+                style: TextStyle(color: Colors.black87),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.only(top: 14),
+                    hintText: '    Nhập địa chỉ cụ thể',
+                    hintStyle: TextStyle(color: Colors.black38,fontSize: 20)),
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 15,
             ),
             Container(
               height: 35,
               width: 200,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/signup');
+                  Navigator.restorablePopAndPushNamed(context, '/login');
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -78,7 +174,7 @@ class _SignupState extends State<Signup> {
                       style: BorderStyle.solid,
                       width: 1.0,
                     ),
-                    color: Colors.red,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: Row(
@@ -86,9 +182,9 @@ class _SignupState extends State<Signup> {
                     children: const <Widget>[
                       Center(
                         child: Text(
-                          "ĐĂNG NHẬP",
+                          "ĐĂNG KÍ",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.red,
                             fontFamily: 'Montserrat',
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -101,34 +197,45 @@ class _SignupState extends State<Signup> {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
             Text("------------ Hoặc ------------"),
-            MaterialButton(
-              height: 30,
-              minWidth: 250,
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              child: Text(
-                "Đăng nhập với facebook",
+                  SizedBox(height: 10,),
+              GestureDetector(
+              child: Container(
+                height: 45,
+                width:250,
+                decoration: BoxDecoration(
+                  border:Border.all(color: Colors.black),
+                  borderRadius:  BorderRadius.circular(30.0),
+                ),
+                padding: EdgeInsets.all(10),
+                child: Row(children: [
+                  Image.asset('images/icon/facebook.jpg',width:30),
+                  SizedBox(width:15),
+                  Text("Đăng nhập với facebook",style: TextStyle(fontSize: 15),),
+                ],),
               ),
-              onPressed: () => {},
-              splashColor: Colors.green,
             ),
-            MaterialButton(
-              height: 30,
-              minWidth: 250,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              textColor: Colors.red,
-              child: Text("Đăng nhập với google"),
-              onPressed: () => {},
-              splashColor: Colors.green,
-
+          SizedBox(height: 10,),
+            GestureDetector(
+              child: Container(
+                height: 45,
+                width:250,
+                decoration: BoxDecoration(
+                  border:Border.all(color: Colors.black),
+                  borderRadius:  BorderRadius.circular(30.0),
+                ),
+                padding: EdgeInsets.all(10),
+                child: Row(children: [
+                  Image.asset('images/icon/google.jpg',width:30),
+                  SizedBox(width:15),
+                  Text("Đăng nhập với google",style: TextStyle(fontSize: 15),),
+                ],),
+              ),
             ),
+            
+            SizedBox(height: 30,),
           ],
         ),
       ),

@@ -70,6 +70,7 @@ flutter:
     - images/product/
     - images/logo.png
     - images/brand/
+    - images/icon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
