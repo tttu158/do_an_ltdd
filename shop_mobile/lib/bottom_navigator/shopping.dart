@@ -151,8 +151,8 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 ),
               )),
           buildProduct(
-              onClicked: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Detail()))),
+              onClicked: () => Navigator.pushNamed(
+                  context, '/details')),
           Divider(
             color: Colors.grey.shade300,
             thickness: 5,

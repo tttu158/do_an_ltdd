@@ -2,7 +2,10 @@ import 'package:do_an/bottom_navigator/bottom.dart';
 import 'package:do_an/bottom_navigator/home.dart';
 import 'package:do_an/bottom_navigator/profile.dart';
 import 'package:do_an/bottom_navigator/shopping.dart';
+import 'package:do_an/pages/addcart/add_cart_screen.dart';
+import 'package:do_an/pages/addcart/notification.dart';
 import 'package:do_an/pages/cart.dart';
+import 'package:do_an/pages/detail.dart';
 import 'package:do_an/user/detailbilldistroy.dart';
 import 'package:do_an/user/detailuser.dart';
 import 'package:do_an/user/forgetpass.dart';
@@ -30,6 +33,9 @@ class MyApp extends StatelessWidget {
               '/detailbilldistroy':(context)=>DetailBills(),
                  '/detailuser':(context)=>DetailUser(),
                      '/forgetpass':(context)=>ForgetPassPhone(),
+                     '/add_cart_screen':(context)=>AddCartScreen(),
+      '/notification':(context)=>NotificationCart(),
+      '/details':(context)=>ProductDetailsScreen(),
       },
     );
   }
