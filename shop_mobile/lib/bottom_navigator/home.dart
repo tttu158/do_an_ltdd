@@ -52,11 +52,16 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                          child: Image(
-                            image: AssetImage(imgProducts[index]),
-                            width: 100,
-                            height: 100,
+                        InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, '/details');
+                          },
+                          child: Align(
+                            child: Image(
+                              image: AssetImage(imgProducts[index]),
+                              width: 100,
+                              height: 100,
+                            ),
                           ),
                         ),
                         Text(nameProduct[index],

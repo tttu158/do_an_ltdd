@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'package:do_an/bottom_navigator/profile.dart';
 import 'package:do_an/user/detailuser.dart';
@@ -42,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Row(
               children: [
-                SizedBox(width: 15,),
+                SizedBox(width: 23,),
                 Container(
                   width: 360,
                   height: 100,
@@ -86,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Icons.visibility_off,
                       // color: Color(0xff2D3132),
                     ),
-                    labelText: 'Psssword',
+                    labelText: 'Password',
                     hintText: 'Mật khẩu',
                      labelStyle: TextStyle(
                             fontStyle: FontStyle.normal, fontSize: 20),

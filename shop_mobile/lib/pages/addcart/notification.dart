@@ -68,7 +68,7 @@ class _NotificationCartState extends State<NotificationCart> {
               SizedBox(height: 30),
               Center(child: ElevatedButton(style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.red),), onPressed: (){
-              Navigator.pushNamed(context,'/notification');
+              Navigator.pushNamed(context,'/orderdetail');
             }, child: Text('Chi tiết giỏ hàng')))
           ],),
         ),

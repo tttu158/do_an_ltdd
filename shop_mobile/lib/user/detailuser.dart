@@ -123,6 +123,9 @@ class _DetailUserState extends State<DetailUser> {
                       SizedBox(width: 25),
                       Column(children: <Widget>[
                         GestureDetector(
+                          onTap: (){
+                             Navigator.pushNamed(context, '/tabgoods');
+                          },
                           child: Container(
                             height: 60,
                             width: 60,

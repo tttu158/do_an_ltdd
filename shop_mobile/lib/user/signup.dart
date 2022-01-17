@@ -59,7 +59,7 @@ class _SignUpState extends State<SignUp> {
               children: [
                 SizedBox(width: 10,),
                 Container(
-                  width: 182,
+                  width: 199,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                   child: const TextField(
@@ -107,7 +107,7 @@ class _SignUpState extends State<SignUp> {
               children: [
                 SizedBox(width: 10,),
                 Container(
-                  width: 182,
+                  width: 199,
                   height:60,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 10),

@@ -199,7 +199,7 @@ class _OrderDetailState extends State<DetailBills> {
             width: 200,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/detailuser');
+                Navigator.pushNamed(context, '/');
               },
               child: Container(
                 decoration: BoxDecoration(
