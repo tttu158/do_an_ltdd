@@ -1,6 +1,6 @@
+import 'package:do_an/bottom_navigator/category.dart';
 import 'package:do_an/bottom_navigator/home.dart';
-import 'package:do_an/bottom_navigator/profile.dart';
-import 'package:do_an/bottom_navigator/shopping.dart';
+import 'package:do_an/bottom_navigator/user.dart';
 import 'package:flutter/material.dart';
 
 class Bottom extends StatefulWidget {
@@ -14,8 +14,8 @@ class _BottomState extends State<Bottom> {
   int currentInex = 0;
   final pages = [
     HomePage(),
-    ShoppingPage(),
-    ProfileUser(),
+  CategoryScreen(),
+    UserScreen(),
   ];
 
   @override
@@ -30,7 +30,7 @@ class _BottomState extends State<Bottom> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.house), label: 'Trang chủ'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_rounded),
+            icon: Icon(Icons.category),
             label: 'Mua hàng',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Người dùng')

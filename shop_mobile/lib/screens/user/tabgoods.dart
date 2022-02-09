@@ -1,12 +1,10 @@
-
-import 'package:do_an/tab/beingtransported.dart';
-import 'package:do_an/tab/canceledgoods.dart';
-import 'package:do_an/tab/delivered.dart';
-import 'package:do_an/tab/returngoods.dart';
-import 'package:do_an/tab/tabconfirming.dart';
-import 'package:do_an/tab/waitingthegoods.dart';
+import 'package:do_an/screens/order/beingtransported.dart';
+import 'package:do_an/screens/order/canceledgoods.dart';
+import 'package:do_an/screens/order/delivered.dart';
+import 'package:do_an/screens/order/returngoods.dart';
+import 'package:do_an/screens/order/tabconfirming.dart';
+import 'package:do_an/screens/order/waitingthegoods.dart';
 import 'package:flutter/material.dart';
-
 
 class Tabgoods extends StatefulWidget {
   @override
@@ -52,11 +50,11 @@ class _TabgoodsState extends State<Tabgoods> {
               indicatorWeight: 3,
               tabs: [
                 Tab(text: 'Chờ xác nhận'),
-                Tab( text: 'Chờ lấy hàng'),
+                Tab(text: 'Chờ lấy hàng'),
                 Tab(text: 'Đang giao'),
-                Tab( text: 'Đã giao'),
-                Tab( text: 'Đã hủy'),
-                Tab( text: 'Trả hàng'),
+                Tab(text: 'Đã giao'),
+                Tab(text: 'Đã hủy'),
+                Tab(text: 'Trả hàng'),
               ],
             ),
             elevation: 20,
@@ -64,12 +62,12 @@ class _TabgoodsState extends State<Tabgoods> {
           ),
           body: TabBarView(
             children: [
-           TabConfirming(),
-         Waitingthegoods(),
-          BeingTransported(),
-          Delivered(),
-         Canceledgoods(),
-           Returngoods(),
+              TabConfirming(),
+              Waitingthegoods(),
+              BeingTransported(),
+              Delivered(),
+              Canceledgoods(),
+              Returngoods(),
             ],
           ),
         ),

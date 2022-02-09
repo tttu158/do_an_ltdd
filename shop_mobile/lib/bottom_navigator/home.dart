@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:do_an/bottom_navigator/shopping.dart';
-import 'package:do_an/brand/macbook.dart';
+import 'package:do_an/api/api_product.dart';
+import 'package:do_an/models/product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,113 +21,104 @@ class _HomePageState extends State<HomePage> {
     'images/banner/banner2.png'
   ];
 
-  final imgProducts = [
-    'images/product/1.jpg',
-    'images/product/2.jpg',
-    'images/product/3.jpg',
-    'images/product/4.jpg'
-  ];
-  final nameProduct = [
-    'MSI Katana Gaming GF66 11UC i7 11800H',
-    'Asus ROG Zephyrus G14 Alan Walker R9 5900HS ',
-    'Acer Nitro 5 Gaming AN515 57 727J i7 11800H',
-    'Lenovo Yoga Slim 7 14ITL05 i5 1135G7 '
-  ];
-
-  final priceProduct = <int>[999999, 9999999, 9999999, 9999999];
-
   @override
   Widget build(BuildContext context) {
-    Widget buildProduct() => Container(
-          child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 20.0),
-              itemCount: imgProducts.length,
-              itemBuilder: (context, index) {
-                return Stack(children: [
-                  Container(
-                    width: 200,
-                    margin: const EdgeInsets.all(5.0),
-                    color: Colors.grey.shade200,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: (){
-                            Navigator.pushNamed(context, '/details');
-                          },
-                          child: Align(
-                            child: Image(
-                              image: AssetImage(imgProducts[index]),
-                              width: 100,
-                              height: 100,
-                            ),
-                          ),
-                        ),
-                        Text(nameProduct[index],
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold)),
-                        Text(
-                          'Giá: ' + priceProduct[index].toString() + 'đ',
-                        )
-                      ],
-                    ),
+    Widget buildFeaturedProduct() => FutureBuilder<List<Product>>(
+        future: fetchFeaturedProduct(),
+        builder: (context, snap) {
+          if (snap.hasError) {
+            return Center(
+              child: Text(snap.hasError.toString()),
+            );
+          }
+          return snap.hasData
+              ? GridView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
                   ),
-                  Positioned(
-                      top: 7,
-                      left: 160,
-                      child: InkWell(
-                        onTap: () {},
-                        child: const Icon(
-                          Icons.favorite_border,
-                        ),
-                      )),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.add_circle,
-                        color: Colors.green,
-                        size: 40,
-                      ),
-                    ),
-                  )
-                ]);
-              }),
-        );
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      mainAxisExtent: 230),
+                  itemCount: snap.data!.length,
+                  itemBuilder: (context, index) {
+                    return buildProduct(
+                        snap.data![index].img![0].path.toString(),
+                        snap.data![index].name.toString(),
+                        int.parse(snap.data![index].price.toString()),
+                        context);
+                  })
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        });
+    Widget buildNewProduct() => FutureBuilder<List<Product>>(
+        future: fetchNewProduct(),
+        builder: (context, snap) {
+          if (snap.hasError) {
+            return Center(
+              child: Text(snap.hasError.toString()),
+            );
+          }
+          return snap.hasData
+              ? GridView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      mainAxisExtent: 230),
+                  itemCount: snap.data!.length,
+                  itemBuilder: (context, index) {
+                    return buildProduct(
+                        snap.data![index].img![0].path.toString(),
+                        snap.data![index].name.toString(),
+                        int.parse(snap.data![index].price.toString()),
+                        context);
+                  })
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        });
+    //     Positioned(
+    //         top: 7,
+    //         left: 160,
+    //         child: InkWell(
+    //           onTap: () {},
+    //           child: const Icon(
+    //             Icons.favorite_border,
+    //           ),
+    //         )),
+    //   ]);
+    // });
 
-    Widget brand = Column(
-      children: [
-        Row(children: [
-          buildImgButton(context, 'images/brand/macbook.png', MacBook()),
-          buildImgButton(context, 'images/brand/asus.png', MacBook()),
-          buildImgButton(context, 'images/brand/hp.png', MacBook()),
-          buildImgButton(context, 'images/brand/lenovo.png', MacBook()),
-        ]),
-        Row(
-          children: [
-            buildImgButton(context, 'images/brand/acer.png', MacBook()),
-            buildImgButton(context, 'images/brand/dell.png', MacBook()),
-            buildImgButton(context, 'images/brand/msi.png', MacBook()),
-            buildImgButton(context, 'images/brand/lg.png', MacBook()),
-          ],
-        )
-      ],
-    );
+    Widget buildBanner() => CarouselSlider.builder(
+        itemCount: imgBanners.length,
+        itemBuilder: (context, index, realIndex) {
+          final imgBanner = imgBanners[index];
+          return buildImg(imgBanner);
+        },
+        options: CarouselOptions(height: 150, autoPlay: true));
     return GestureDetector(
       //huy keyboard khi bam ngoai man hinh
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
-              SizedBox(
-                width: 50,
-                height: 50,
+              Container(
+                width: 100,
+                height: 100,
                 child: Align(
                   alignment: Alignment.center,
                   child: Image.asset(
@@ -133,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              Container(
                 width: 350,
                 height: 40,
                 child: Row(
@@ -164,61 +157,53 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              buildBanner(),
+              const SizedBox(
+                height: 5,
+              ),
+              Divider(
+                color: Colors.grey.shade300,
+                thickness: 5,
+              ),
               Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: CarouselSlider.builder(
-                    itemCount: imgBanners.length,
-                    itemBuilder: (context, index, realIndex) {
-                      final imgBanner = imgBanners[index];
-                      return buildImg(imgBanner, index);
-                    },
-                    options: CarouselOptions(height: 200, autoPlay: true)),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Divider(
-                color: Colors.grey.shade300,
-                thickness: 5,
-              ),
-              brand,
-              Divider(
-                color: Colors.grey.shade300,
-                thickness: 5,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Padding(
-                  padding: EdgeInsets.only(left: 5.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Danh mục nổi bật',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      'Sản phẩm nổi bật',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                  )),
-              buildProduct(),
-              Divider(
-                color: Colors.grey.shade300,
-                thickness: 5,
+                    Text(
+                      'Xem tất cả',
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ),
               ),
-              const Padding(
-                  padding: EdgeInsets.only(left: 5.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Gợi ý hôm nay',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+              buildFeaturedProduct(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      'Sản phẩm mới',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                  )),
-              buildProduct(),
+                    Text(
+                      'Xem tất cả',
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ),
+              ),
+              buildNewProduct()
             ],
           ),
         ),
@@ -227,11 +212,61 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget buildImg(String urlImage, int index) => Container(
-    margin: const EdgeInsets.symmetric(horizontal: 12),
-    color: Colors.grey,
-    width: double.infinity,
-    child: Image(
-      image: AssetImage(urlImage),
-      fit: BoxFit.cover,
-    ));
+Widget buildImg(String urlImage) => Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+          image:
+              DecorationImage(image: AssetImage(urlImage), fit: BoxFit.cover),
+          color: Colors.green,
+          borderRadius: BorderRadius.circular(10)),
+    );
+Widget buildProduct(
+        String urlimg, String name, int price, BuildContext context) =>
+    GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/details');
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(-1, 3), // changes position of shadow
+                ),
+              ]),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 2,
+                child: CachedNetworkImage(
+                  imageUrl: "http://10.0.2.2:8000/storage/" + urlimg,
+                  width: 140,
+                  placeholder: (context, url) => const Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    color: Colors.black12,
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Giá:$price',
+                  ),
+                ],
+              ))
+            ],
+          ),
+        ));

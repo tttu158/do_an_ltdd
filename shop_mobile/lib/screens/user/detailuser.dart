@@ -1,6 +1,6 @@
-import 'package:do_an/bottom_navigator/profile.dart';
-import 'package:do_an/user/infomationuser.dart';
-import 'package:do_an/user/orderdetail.dart';
+import 'package:do_an/bottom_navigator/user.dart';
+import 'package:do_an/screens/user/infomationuser.dart';
+
 import 'package:flutter/material.dart';
 
 class DetailUser extends StatefulWidget {

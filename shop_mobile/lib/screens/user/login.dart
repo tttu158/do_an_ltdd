@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:do_an/bottom_navigator/profile.dart';
-import 'package:do_an/user/detailuser.dart';
+import 'package:do_an/bottom_navigator/user.dart';
+import 'package:do_an/screens/user/detailuser.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
