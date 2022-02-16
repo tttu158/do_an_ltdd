@@ -1,9 +1,12 @@
 import 'dart:math';
+import 'package:do_an/api/api_login.dart';
 import 'package:do_an/bottom_navigator/user.dart';
+import 'package:do_an/models/account.dart';
 import 'package:do_an/screens/user/detailuser.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -14,7 +17,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  Account requestModel =Account(
+     id:0,
+   email:"",
+   password:"",
+  fullName:"",
+    sex:null,
+    address:"",
+    phone:"",
+    birthday:"",
+    avatar:"",
+    isAdmin:0,
+    createdAt:"",
+    updatedAt:"",
+  );
+  var _secureText=true;
+  var emailController=TextEditingController();
+  var passwordController=TextEditingController();
+  bool _isObscure =true;
   @override
+  void initState(){
+    super.initState();
+    requestModel;
+  }
   Widget build(BuildContext context) {
   
     return Scaffold(
@@ -48,8 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 100,
                   child:  Padding(
                     padding: EdgeInsets.all(15),
-                    child: TextField(
-                      obscureText: true,
+                    child: TextFormField(
+                      
+                      controller: emailController,
+                      obscureText: false,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -72,28 +100,38 @@ class _LoginScreenState extends State<LoginScreen> {
               width:360,
               child:  Padding(
                 padding: EdgeInsets.all(15),
-                child: TextField(
-                  obscureText: true,
+                child: TextFormField(
+                  controller: passwordController,
+                  onSaved: (input)=>requestModel.password=input!,
+                  validator: (input)
+                  =>(input)!.length<3?"Mật khẩu phải nhiều hơn 3 kí tự ":null,
+                  obscureText: _secureText,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                     ),
+                    
                     prefixIcon: Icon(
                       Icons.https,
                      
                     ),
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      // color: Color(0xff2D3132),
-                    ),
+                    suffixIcon: IconButton(
+                      icon:Icon(_secureText?Icons.remove_red_eye:Icons.security) ,
+
+                      onPressed:(){
+                       setState(() {
+                         _secureText=!_secureText;
+                       });
+                      }
+                      ),
                     labelText: 'Password',
                     hintText: 'Mật khẩu',
                      labelStyle: TextStyle(
                             fontStyle: FontStyle.normal, fontSize: 20),
-                  ),
+              )),
                 ),
               ),
-            ),
+          
             const SizedBox(
               height: 30,
             ),
@@ -102,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 200,
               child: GestureDetector(
                 onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>const DetailUser()));
+                login(emailController.text, passwordController.text, context);
                 },
                 child: Container(
                   decoration: BoxDecoration(
