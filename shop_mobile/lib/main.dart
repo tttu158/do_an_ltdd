@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       '/orderdetail': (context) => const OrderDetail(),
       '/resondistroy': (context) => const Resondistroy(),
       '/detailbilldistroy': (context) => const DetailBills(),
-      // '/detailuser': (context) => const DetailUser(),
+      '/detailuser': (context) => const DetailUser(),
       '/forgetpass': (context) => const ForgetPassPhone(),
       '/add_cart_screen': (context) => const AddCartScreen(),
       '/notification': (context) => const NotificationCart(),
@@ -38,3 +38,4 @@ class MyApp extends StatelessWidget {
     });
   }
 }
+///can push

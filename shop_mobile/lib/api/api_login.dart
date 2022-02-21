@@ -60,7 +60,7 @@ Future<Account> login(String email, String password, context) async {
     }
   } else {
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Black field not allowed")));
+        .showSnackBar(const SnackBar(content: Text("Vui lòng nhập đầy đủ thông tin")));
   }
   return result;
 }

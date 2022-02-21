@@ -15,8 +15,11 @@ class _ForgetPassPhoneState extends State<ForgetPassPhone> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(Icons.keyboard_arrow_left),
+          
         ),
         backgroundColor: Colors.red,
         title: Text("Quên mật khẩu"),

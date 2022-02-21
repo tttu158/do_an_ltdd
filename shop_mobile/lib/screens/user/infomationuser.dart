@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:do_an/api/api_account.dart';
 import 'package:do_an/models/account.dart';
+import 'package:do_an/screens/user/edit_user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,9 @@ class InfomationUser extends StatefulWidget {
 
 class _InfomationUserState extends State<InfomationUser> {
   final int id;
+  onGoBack(dynamic value) {
+    setState(() {});
+  }
 
   _InfomationUserState(this.id);
 
@@ -27,12 +31,18 @@ class _InfomationUserState extends State<InfomationUser> {
             appBar: AppBar(
               title: Text("Chi tiết thông tin tài khoản"),
               backgroundColor: Colors.red,
-              leading: Icon(Icons.keyboard_arrow_left),
+              leading: IconButton(
+                icon: Icon(Icons.keyboard_arrow_left),
+                onPressed: () {
+               Navigator.pushNamed(context, '/');
+                },
+              ),
             ),
             body: SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 children: [
+                     
                   SizedBox(
                     height: 30,
                   ),
@@ -43,6 +53,7 @@ class _InfomationUserState extends State<InfomationUser> {
                           SizedBox(
                             width: 15,
                           ),
+                         
                           Text(
                             "Thông tin tài khoản",
                             style: TextStyle(
@@ -50,16 +61,11 @@ class _InfomationUserState extends State<InfomationUser> {
                                 color: Colors.black,
                                 fontSize: 17),
                           ),
+                     
                           SizedBox(
                             width: 150,
                           ),
-                          Text(
-                            "Sửa",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.red,
-                                fontSize: 17),
-                          ),
+                          
                         ],
                       ),
                     ],
@@ -67,6 +73,59 @@ class _InfomationUserState extends State<InfomationUser> {
                   SizedBox(
                     height: 30,
                   ),
+                  Center(
+                    child: Stack(children: [
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250"),
+                            )),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape:BoxShape.circle,
+                            border: Border.all(
+                              width:4,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            ),
+                            color: Colors.green,
+                          ),
+                          child:InkWell(
+                         
+                          child:    Icon(Icons.edit, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ),
+                  SizedBox(height: 20,),
+                  Row(children: [
+                    SizedBox(width:175),
+                    InkWell(
+                            child: Text(
+                              "Edit Profile",
+                              style: TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 15,),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditUser(id: id))).then((onGoBack));
+                            },
+                          ),
+                  ],),
                   Column(
                     children: [
                       Row(
@@ -86,8 +145,9 @@ class _InfomationUserState extends State<InfomationUser> {
                           SizedBox(
                             height: 40,
                           ),
+                          
                           Text(
-                            snapshot.data?.fullName ?? "",
+                            snapshot.data?.fullName ?? "Trống",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -110,7 +170,7 @@ class _InfomationUserState extends State<InfomationUser> {
                             height: 40,
                           ),
                           Text(
-                            snapshot.data!.phone!,
+                            snapshot.data?.phone ?? "Trống",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -127,13 +187,13 @@ class _InfomationUserState extends State<InfomationUser> {
                             ),
                           ),
                           SizedBox(
-                            width: 195,
+                            width: 188,
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 50,
                           ),
                           Text(
-                           snapshot.data?.birthday??"Chưa có",
+                            snapshot.data?.birthday ?? "Chưa có",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -150,7 +210,7 @@ class _InfomationUserState extends State<InfomationUser> {
                             ),
                           ),
                           SizedBox(
-                            width: 249,
+                            width: 200,
                           ),
                           SizedBox(
                             height: 40,
@@ -173,7 +233,7 @@ class _InfomationUserState extends State<InfomationUser> {
                             ),
                           ),
                           SizedBox(
-                            width: 155,
+                            width: 215,
                           ),
                           SizedBox(
                             height: 40,
@@ -208,7 +268,7 @@ class _InfomationUserState extends State<InfomationUser> {
                           Column(
                             children: [
                               Text(
-                                snapshot.data?.address??"",
+                                snapshot.data?.address ?? "",
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                             ],

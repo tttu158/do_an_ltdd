@@ -22,7 +22,7 @@ class _UserScreenState extends State<UserScreen> {
             width: 200,
             child: GestureDetector(
               onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/login');
+              Navigator.pushNamed(context, '/login');
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -60,7 +60,9 @@ class _UserScreenState extends State<UserScreen> {
             height: 35,
             width: 200,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+              Navigator.pushNamed(context, '/signup');
+              },
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(

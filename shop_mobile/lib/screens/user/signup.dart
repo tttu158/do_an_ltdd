@@ -23,12 +23,14 @@ class _SignUpState extends State<SignUp> {
   var addressController=TextEditingController();
   var sexController=TextEditingController();
   var phoneController=TextEditingController();
+  final formkey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       child: Column(
+        key: formkey,
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
@@ -40,34 +42,45 @@ class _SignUpState extends State<SignUp> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-              child:  TextField(
+          Container(
+            height: 70,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child:  TextFormField(
                 controller: fullnameController,
                 keyboardType: TextInputType.text,
-                style: TextStyle(color: Colors.black),
+               validator: (value) {
+                 if(value!.isEmpty || RegExp( r'^[a-z A-Z,.\-]+$').hasMatch(value))
+                 {
+                   return "Họ và tên không được có số";
+                 }
+                 else{
+                   return null;
+                 }
+               },
+                style: TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(top: 14),
-                    hintText: '  Họ và tên',
+                    hintText: 'Họ và tên......',
                     hintStyle: TextStyle(color: Colors.black38, fontSize: 20)),
               ),
             ),
             SizedBox(height: 9),
             Container(
+            height: 70,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child:  TextField(
                 controller: emailController,
+                
                 keyboardType: TextInputType.text,
                 style: TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(top: 14),
-                    hintText: '  Địa chỉ mail ....',
+                    hintText: 'Địa chỉ mail......',
                     hintStyle: TextStyle(color: Colors.black38, fontSize: 20)),
               ),
             ),
-            Container(
+           Container(
+            height: 70,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child:  TextField(
                 controller: phoneController,
@@ -75,50 +88,25 @@ class _SignUpState extends State<SignUp> {
                 style: TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(top: 14),
-                    hintText: '  Số điện thoại......',
+                    hintText: 'Số điện thoại......',
                     hintStyle: TextStyle(color: Colors.black38, fontSize: 20)),
               ),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: 199,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                  child:  TextField(
-                    controller:passwordController,
-                    keyboardType: TextInputType.text,
-                    style: TextStyle(color: Colors.black87),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 14),
-                        hintText: '  Mật khẩu',
-                        hintStyle:
-                            TextStyle(color: Colors.black38, fontSize: 18)),
-                  ),
-                ),
-                Container(
-                  width: 190,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                  child: const TextField(
-                    keyboardType: TextInputType.text,
-                    style: TextStyle(color: Colors.black87),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(top: 14),
-                        hintText: '  Xác nhận mật khẩu',
-                        hintStyle:
-                            TextStyle(color: Colors.black38, fontSize: 18)),
-                  ),
-                ),
-              ],
+           Container(
+            height: 70,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child:  TextField(
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                style: TextStyle(color: Colors.black87),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Mật khẩu......',
+                    hintStyle: TextStyle(color: Colors.black38, fontSize: 20)),
+              ),
             ),
             Container(
+              height: 70,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child:  TextField(
                 controller: addressController,
@@ -126,8 +114,7 @@ class _SignUpState extends State<SignUp> {
                 style: TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.only(top: 14),
-                    hintText: '    Nhập địa chỉ cụ thể',
+                    hintText: 'Địa chỉ cụ thể',
                     hintStyle: TextStyle(color: Colors.black38, fontSize: 20)),
               ),
             ),
@@ -175,6 +162,7 @@ class _SignUpState extends State<SignUp> {
                       int gioitinh=0;
                       if(_gioitinh==GioiTinh.nu)
                       gioitinh=1;
+                      
                    await signin(emailController.text, passwordController.text, fullnameController.text,addressController.text, phoneController.text,gioitinh.toString(), context);
                     },
                     child: Container(

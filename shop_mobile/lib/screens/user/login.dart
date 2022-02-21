@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   backgroundColor: Colors.red,
  leading: IconButton(
     onPressed: () {
-   Navigator.pushNamed(context, '/detailuser');
+   Navigator.pop(context);
     },
     icon: Icon(Icons.keyboard_arrow_left),
   ),
@@ -86,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon:Icon(
                          (Icons.person),
                         ),
-                        labelText: 'Username',
-                        hintText: 'Tên đăng nhập',
+                        labelText: 'Email/Số điện thoại',
+                        hintText: 'Email/Số điện thoại',
                         labelStyle: TextStyle(
                             fontStyle: FontStyle.normal, fontSize: 20),
                       ),
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                        });
                       }
                       ),
-                    labelText: 'Password',
+                    labelText: 'Mật khẩu',
                     hintText: 'Mật khẩu',
                      labelStyle: TextStyle(
                             fontStyle: FontStyle.normal, fontSize: 20),
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               InkWell(child: Text("Bạn quên mật khẩu ?"),
               onTap: (){
-                   Navigator.pushNamed(context, '/forgetpass');
+                   Navigator.pushNamed(context, '/detailuser');
               },),
 
               SizedBox(
@@ -185,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   "Đăng kí tài khoản ?",
                   style: TextStyle(color: Colors.blue,fontWeight: FontWeight.w700),
+                  
                 ),
                 onTap: (){
                   Navigator.pushNamed(context, '/signup');

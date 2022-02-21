@@ -1,6 +1,8 @@
 import 'package:do_an/bottom_navigator/category.dart';
 import 'package:do_an/bottom_navigator/home.dart';
 import 'package:do_an/bottom_navigator/user.dart';
+import 'package:do_an/screens/user/signup.dart';
+
 import 'package:flutter/material.dart';
 
 class Bottom extends StatefulWidget {
@@ -14,7 +16,7 @@ class _BottomState extends State<Bottom> {
   int currentInex = 0;
   final pages = [
     HomePage(),
-  CategoryScreen(),
+    CategoryScreen(),
     UserScreen(),
   ];
 
