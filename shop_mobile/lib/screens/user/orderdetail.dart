@@ -152,8 +152,6 @@ class _OrderDetailState extends State<OrderDetail> {
             SizedBox(
               height: 30,
             ),
-         
-        
             SizedBox(height: 50),
             Row(
               children: [

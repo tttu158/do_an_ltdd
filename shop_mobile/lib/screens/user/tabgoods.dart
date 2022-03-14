@@ -1,39 +1,27 @@
-import 'package:do_an/screens/order/beingtransported.dart';
-import 'package:do_an/screens/order/canceledgoods.dart';
-import 'package:do_an/screens/order/delivered.dart';
-import 'package:do_an/screens/order/returngoods.dart';
-import 'package:do_an/screens/order/tabconfirming.dart';
-import 'package:do_an/screens/order/waitingthegoods.dart';
+
+import 'package:do_an/models/account.dart';
+import 'package:do_an/screens/tab/beingtransported.dart';
+import 'package:do_an/screens/tab/canceledgoods.dart';
+import 'package:do_an/screens/tab/delivered.dart';
+import 'package:do_an/screens/tab/tabconfirming.dart';
 import 'package:flutter/material.dart';
 
 class Tabgoods extends StatefulWidget {
+  Tabgoods({Key? key, required this.acc}) : super(key: key);
+  Account acc;
   @override
-  _TabgoodsState createState() => _TabgoodsState();
+  _TabgoodsState createState() => _TabgoodsState(this.acc);
 }
 
 class _TabgoodsState extends State<Tabgoods> {
+  Account acc;
+  _TabgoodsState(this.acc);
   @override
   Widget build(BuildContext context) => DefaultTabController(
-        length: 6,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             title: Text("Đơn mua"),
-            //centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.keyboard_arrow_left),
-              onPressed: () {},
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.notifications_none),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {},
-              )
-            ],
-            //backgroundColor: Colors.purple,
             flexibleSpace: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -50,11 +38,9 @@ class _TabgoodsState extends State<Tabgoods> {
               indicatorWeight: 3,
               tabs: [
                 Tab(text: 'Chờ xác nhận'),
-                Tab(text: 'Chờ lấy hàng'),
                 Tab(text: 'Đang giao'),
                 Tab(text: 'Đã giao'),
                 Tab(text: 'Đã hủy'),
-                Tab(text: 'Trả hàng'),
               ],
             ),
             elevation: 20,
@@ -62,12 +48,14 @@ class _TabgoodsState extends State<Tabgoods> {
           ),
           body: TabBarView(
             children: [
-              TabConfirming(),
-              Waitingthegoods(),
-              BeingTransported(),
+              TabConfirming(
+               
+              ),
+              BeingTransported(
+              
+              ),
               Delivered(),
               Canceledgoods(),
-              Returngoods(),
             ],
           ),
         ),

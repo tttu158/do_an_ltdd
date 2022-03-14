@@ -1,4 +1,6 @@
-import 'package:do_an/screens/user/infomationuser.dart';
+import 'package:do_an/bottom_navigator/bottom.dart';
+import 'package:do_an/models/account.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:do_an/models/account.dart';
 import 'dart:convert';
@@ -24,11 +26,9 @@ Future<Account> login(String email, String password, context) async {
   if (email.isNotEmpty && password.isNotEmpty) {
     final response = await http.post(Uri.parse(urlLogin),
         body: ({
-         
           "email": email,
           "password": password,
           "phone": email,
-
         }));
     if (response.statusCode == 200) {
       result = Account.fromJson(json.decode(response.body));
@@ -38,10 +38,11 @@ Future<Account> login(String email, String password, context) async {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => InfomationUser(id: result.id!)),
+              builder: (context) => Bottom(
+                    acc: result,
+                  )),
           (route) => false);
-    } 
-    else {
+    } else {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -60,7 +61,7 @@ Future<Account> login(String email, String password, context) async {
     }
   } else {
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Vui lòng nhập đầy đủ thông tin")));
+        .showSnackBar(const SnackBar(content: Text("Black field not allowed")));
   }
   return result;
 }

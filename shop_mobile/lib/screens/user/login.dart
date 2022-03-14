@@ -1,13 +1,7 @@
-import 'dart:math';
 import 'package:do_an/api/api_login.dart';
-import 'package:do_an/bottom_navigator/user.dart';
 import 'package:do_an/models/account.dart';
-import 'package:do_an/screens/user/detailuser.dart';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -47,13 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
   title: Text('Đăng nhập'),
   backgroundColor: Colors.red,
- leading: IconButton(
-    onPressed: () {
-   Navigator.pop(context);
-    },
-    icon: Icon(Icons.keyboard_arrow_left),
   ),
-),
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
@@ -86,8 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon:Icon(
                          (Icons.person),
                         ),
-                        labelText: 'Email/Số điện thoại',
-                        hintText: 'Email/Số điện thoại',
+                        labelText: 'Email/số điện thoại',
+                        hintText: 'Email/số điện thoại',
                         labelStyle: TextStyle(
                             fontStyle: FontStyle.normal, fontSize: 20),
                       ),
@@ -124,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                        });
                       }
                       ),
-                    labelText: 'Mật khẩu',
+                    labelText: 'Password',
                     hintText: 'Mật khẩu',
                      labelStyle: TextStyle(
                             fontStyle: FontStyle.normal, fontSize: 20),
@@ -173,19 +161,14 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: 20,
               ),
-              InkWell(child: Text("Bạn quên mật khẩu ?"),
-              onTap: (){
-                   Navigator.pushNamed(context, '/detailuser');
-              },),
 
               SizedBox(
-                width: 100,
+                width: 130,
               ),    
               InkWell(
                 child: Text(
                   "Đăng kí tài khoản ?",
                   style: TextStyle(color: Colors.blue,fontWeight: FontWeight.w700),
-                  
                 ),
                 onTap: (){
                   Navigator.pushNamed(context, '/signup');
@@ -196,31 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 50,
               ),
-              SizedBox(
-                width: 130,
-              ),
-              Text("----------   Hoặc   ---------- "),
             ]),
-            Row(
-              children: [
-                SizedBox(width:88),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Image.asset('images/icon/facebook.jpg', width: 50),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                  ),
-                ),
-                 SizedBox(width:60),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Image.asset('images/icon/google.jpg', width: 50),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

@@ -1,7 +1,6 @@
 //
 import 'dart:math';
 import 'package:do_an/api/api_account.dart';
-import 'package:do_an/api/api_edituser.dart';
 import 'package:do_an/models/account.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,9 @@ class EditUser extends StatefulWidget {
 
 class _EditUserState extends State<EditUser> {
   final int id;
+
   var _secureText = true;
+  final GlobalKey<FormState> _formkey =GlobalKey<FormState>();
   _EditUserState(this.id);
 
   @override
@@ -35,6 +36,7 @@ class _EditUserState extends State<EditUser> {
               TextEditingController(text: snapshot.data!.address);
           var phoneController =
               TextEditingController(text: snapshot.data!.phone);
+            
           return Scaffold(
               appBar: AppBar(
                 title: Text("Sửa thông tin cá nhân"),
@@ -46,9 +48,12 @@ class _EditUserState extends State<EditUser> {
                     child: Icon(Icons.keyboard_arrow_left)),
               ),
               body: SingleChildScrollView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  child: Column(
+                  keyboardDismissBehavior:ScrollViewKeyboardDismissBehavior.onDrag,
+                  child:Form(
+                    key: _formkey,
+                    child: 
+                  
+                   Column(
                     children: [
                       SizedBox(
                         height: 30,
@@ -69,6 +74,17 @@ class _EditUserState extends State<EditUser> {
                         width: 380,
                         child: TextFormField(
                           controller: fullnameController,
+                       validator: (value){
+                          if(value!.isEmpty)
+                          return "Vui lòng nhập họ tên !";
+
+                        if(!RegExp(r'^[a-z A-Z]+$').hasMatch(value)){
+                              //allow upper and lower case alphabets and space
+                              return "Họ và tên không đúng !";
+                          }else{
+                             return null;
+                          }
+                        },
                           obscureText: false,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -98,6 +114,17 @@ class _EditUserState extends State<EditUser> {
                         width: 380,
                         child: TextFormField(
                           controller: emailController,
+                           validator: (value){
+                             if(value!.isEmpty)
+                             {
+                               return "Email không được bỏ trống!";
+                             }
+                          if( !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
+                              return "Vui lòng nhập đúng email";
+                          }else{
+                             return null;
+                          }
+                        },
                           obscureText: false,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -127,6 +154,17 @@ class _EditUserState extends State<EditUser> {
                         width: 380,
                         child: TextFormField(
                           controller: passwordController,
+                          validator: (value){
+                             if(value!.isEmpty)
+                             {
+                               return "Mật khẩu không được bỏ trống !";
+                             }
+                          if( !RegExp(r'^(?=.*?).{3,}$').hasMatch(value)){
+                              return "Mật khẩu phải dài hơn 3 kí tự";
+                          }else{
+                             return null;
+                          }
+                        },
                           obscureText: _secureText,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -165,7 +203,18 @@ class _EditUserState extends State<EditUser> {
                         width: 380,
                         child: TextFormField(
                           controller: phoneController,
+                         
                           obscureText: false,
+                          validator: (value){
+                          if(value!.isEmpty)
+                          return "Sô điện thoại không được bỏ trống";
+
+                           if(!RegExp( r'^(?:[+0][1-9])?[0-9]{10,12}$').hasMatch(value)){
+                              return "Số điện thoại không hợp lệ";
+                          }else{
+                             return null;
+                          }
+                        },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(1.0),
@@ -193,6 +242,17 @@ class _EditUserState extends State<EditUser> {
                       Container(
                         width: 380,
                         child: TextFormField(
+                            validator: (value){
+                          if(value!.isEmpty)
+                          return "Vui lòng nhập địa chỉ cụ thể !";
+
+                        if(!RegExp(r'^(?=.*?).{10,}$').hasMatch(value)){
+                              //allow upper and lower case alphabets and space
+                              return "Nhập đúng địa chỉ cụ thể, có ít nhất 10 ký tự !";
+                          }else{
+                             return null;
+                          }
+                        },
                           controller: addressController,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -215,6 +275,7 @@ class _EditUserState extends State<EditUser> {
                         width: 200,
                         child: GestureDetector(
                           onTap: () {
+                            if(_formkey.currentState!.validate()){
                             edit(
                                 emailController.text,
                                 passwordController.text,
@@ -223,6 +284,7 @@ class _EditUserState extends State<EditUser> {
                                 phoneController.text,
                                 id.toString(),
                                 context);
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -249,6 +311,7 @@ class _EditUserState extends State<EditUser> {
                         ),
                       ),
                     ],
+                  )
                   )));
         }
         return Container();

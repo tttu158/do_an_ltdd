@@ -5,9 +5,9 @@ import 'package:do_an/screens/cart.dart';
 import 'package:do_an/screens/products/addcart/add_cart_screen.dart';
 import 'package:do_an/screens/products/addcart/notification.dart';
 import 'package:do_an/screens/products/detail.dart';
+import 'package:do_an/screens/start.dart';
 import 'package:do_an/screens/user/detailbilldistroy.dart';
 import 'package:do_an/screens/user/detailuser.dart';
-import 'package:do_an/screens/user/forgetpass.dart';
 import 'package:do_an/screens/user/login.dart';
 import 'package:do_an/screens/user/orderdetail.dart';
 import 'package:do_an/screens/user/resondistroy.dart';
@@ -22,20 +22,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Bottom(), routes: {
+    return MaterialApp(home: StartScreen(), routes: {
       '/cart': (context) => CartPage(),
       '/login': (context) => const LoginScreen(),
       '/signup': (context) => const SignUp(),
       '/orderdetail': (context) => const OrderDetail(),
       '/resondistroy': (context) => const Resondistroy(),
       '/detailbilldistroy': (context) => const DetailBills(),
-      '/detailuser': (context) => const DetailUser(),
-      '/forgetpass': (context) => const ForgetPassPhone(),
       '/add_cart_screen': (context) => const AddCartScreen(),
       '/notification': (context) => const NotificationCart(),
       '/details': (context) => const ProductDetailsScreen(),
-      '/tabgoods': (context) => Tabgoods(),
     });
   }
 }
-///can push

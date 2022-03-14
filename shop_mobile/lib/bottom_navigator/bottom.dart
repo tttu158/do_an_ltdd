@@ -1,27 +1,30 @@
 import 'package:do_an/bottom_navigator/category.dart';
 import 'package:do_an/bottom_navigator/home.dart';
-import 'package:do_an/bottom_navigator/user.dart';
-import 'package:do_an/screens/user/signup.dart';
-
+import 'package:do_an/models/account.dart';
+import 'package:do_an/screens/user/detailuser.dart';
 import 'package:flutter/material.dart';
 
 class Bottom extends StatefulWidget {
-  Bottom({Key? key}) : super(key: key);
-
+  Bottom({Key? key, required this.acc}) : super(key: key);
+  final Account acc;
   @override
-  _BottomState createState() => _BottomState();
+  _BottomState createState() => _BottomState(this.acc);
 }
 
 class _BottomState extends State<Bottom> {
+  final Account acc;
+  _BottomState(this.acc);
   int currentInex = 0;
-  final pages = [
-    HomePage(),
-    CategoryScreen(),
-    UserScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      HomePage(),
+      CategoryScreen(),
+      DetailUser(
+        acc: acc,
+      ),
+    ];
     return Scaffold(
       body: pages[currentInex],
       bottomNavigationBar: BottomNavigationBar(
@@ -32,8 +35,8 @@ class _BottomState extends State<Bottom> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.house), label: 'Trang chủ'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Mua hàng',
+            icon: Icon(Icons.border_all),
+            label: 'Danh mục',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Người dùng')
         ],

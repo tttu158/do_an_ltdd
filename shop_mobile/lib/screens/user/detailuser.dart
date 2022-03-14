@@ -1,18 +1,22 @@
-import 'package:do_an/bottom_navigator/user.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:do_an/models/account.dart';
+import 'package:do_an/screens/start.dart';
 import 'package:do_an/screens/user/infomationuser.dart';
-
+import 'package:do_an/screens/user/tabgoods.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailUser extends StatefulWidget {
-
-  const DetailUser({Key? key}) : super(key: key);
-
+  const DetailUser({Key? key, required this.acc}) : super(key: key);
+  final Account acc;
   @override
-  _DetailUserState createState() => _DetailUserState();
+  _DetailUserState createState() => _DetailUserState(this.acc);
 }
 
 class _DetailUserState extends State<DetailUser> {
+  final Account acc;
+  _DetailUserState(this.acc);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +27,7 @@ class _DetailUserState extends State<DetailUser> {
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               height: 30,
@@ -33,10 +37,12 @@ class _DetailUserState extends State<DetailUser> {
                 SizedBox(width: 30),
                 GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) =>  InfomationUser()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InfomationUser(
+                                  acc: acc,
+                                )));
                   },
                   child: Container(
                     height: 45,
@@ -46,220 +52,58 @@ class _DetailUserState extends State<DetailUser> {
                     child: Row(
                       children: [
                         Text(
-                          "Lý Tiểu Long",
+                          acc.fullName.toString(),
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(width: 50),
+                        SizedBox(width: 20),
                         Icon(Icons.keyboard_arrow_right)
                       ],
                     ),
                   ),
                 ),
-                Image.asset(
-                  'images/icon/user.png',
+                CachedNetworkImage(
                   width: 50,
+                  imageUrl: "http://10.0.2.2:8000/storage/" + acc.avatar!,
+                  placeholder: (context, url) => const Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    color: Colors.black12,
+                  ),
                 ),
               ],
             ),
             SizedBox(
               height: 30,
             ),
-            Row(
-              children: [
-                SizedBox(width: 40),
-                Text(
-                  "Đơn hàng của tôi",
-                  style: TextStyle(fontSize: 17),
-                ),
-              ],
+            Divider(
+              color: Colors.grey.shade300,
+              thickness: 6,
             ),
-            SizedBox(height: 50),
             Container(
-              child: Column(
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(width: 29),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade200,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [Image.asset('images/icon/pay.png')],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text("Chờ thanh "),
-                        Text("toán"),
-                      ]),
-                      SizedBox(width: 25),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade200,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Image.asset('images/icon/processing.jpg')
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text("Đang xử "),
-                        Text("lí"),
-                      ]),
-                      SizedBox(width: 25),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          onTap: (){
-                             Navigator.pushNamed(context, '/tabgoods');
-                          },
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade200,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Image.asset('images/icon/like_ib_1.png')
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text("Đang vận "),
-                        Text("chuyển"),
-                      ]),
-                      SizedBox(width: 25),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade200,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Image.asset('images/icon/review.png')
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text("Chờ đánh "),
-                        Text("giá"),
-                      ]),
-                    ],
-                  ),
+                  SizedBox(width: 20),
+                  Image.asset('images/icon/like_ib.png', width: 30),
+                  SizedBox(width: 20),
+                  Text("Chi tiết đơn hàng"),
+                  SizedBox(width: 130),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Tabgoods(
+                                      acc: acc,
+                                    )));
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                      )),
                 ],
               ),
             ),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 6,
-            ),
-           Container(
-                  child: Row(
-                  
-                    children: [
-                       SizedBox(width:20),
-                      Image.asset('images/icon/gift.jpg', width: 30),
-                       SizedBox(width:20),
-                      Text("Đánh giá sản phẩm"),
-                     SizedBox(width: 130),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios,
-                          )),
-                    ],
-                  ),
-                ),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 6,
-            ),
-            Container(
-                  child: Row(
-                  
-                    children: [
-                       SizedBox(width:20),
-                      Image.asset('images/icon/like_ib.png', width: 30),
-                       SizedBox(width:20),
-                      Text("Đánh giá sản phẩm"),
-                     SizedBox(width: 130),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios,
-                          )),
-                    ],
-                  ),
-                ),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 6,
-            ),
-            Container(
-                  child: Row(
-                  
-                    children: [
-                       SizedBox(width:20),
-                      Image.asset('images/icon/purchased_product.png', width: 30),
-                       SizedBox(width:20),
-                      Text("Đánh giá sản phẩm"),
-                     SizedBox(width: 130),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios,
-                          )),
-                    ],
-                  ),
-                ),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 6,
-            ),
-            Container(
-                  child: Row(
-                  
-                    children: [
-                       SizedBox(width:20),
-                      Image.asset('images/icon/like_ib.png', width: 30),
-                       SizedBox(width:20),
-                      Text("Chi tiết đơn hàng"),
-                     SizedBox(width: 130),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/orderdetail');
-                          },
-                          icon: Icon(
-                            Icons.arrow_forward_ios,
-                          )),
-                    ],
-                  ),
-                ),
             Divider(
               color: Colors.grey.shade300,
               thickness: 6,
@@ -283,30 +127,6 @@ class _DetailUserState extends State<DetailUser> {
                 children: [
                   Row(
                     children: [
-                      SizedBox(width: 35),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade100,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(Icons.remove_red_eye),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text("Đã xem"),
-                      ]),
                       SizedBox(width: 25),
                       Column(children: <Widget>[
                         GestureDetector(
@@ -332,53 +152,6 @@ class _DetailUserState extends State<DetailUser> {
                         Text("Yêu thích"),
                       ]),
                       SizedBox(width: 25),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade100,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(Icons.local_mall),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text("Mua sau"),
-                      ]),
-                      SizedBox(width: 25),
-                      Column(children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade100,
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(Icons.bungalow),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text("Theo dõi"),
-                      ]),
                     ],
                   ),
                 ],
@@ -391,12 +164,16 @@ class _DetailUserState extends State<DetailUser> {
               color: Colors.grey.shade300,
               thickness: 10,
             ),
-               Container(
+            
+            Container(
               height: 35,
               width: 200,
               child: GestureDetector(
                 onTap: () {
-              Navigator.pushNamed(context, '/login');
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => StartScreen()),
+                      (route) => false);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -408,7 +185,7 @@ class _DetailUserState extends State<DetailUser> {
                     children: const <Widget>[
                       Center(
                         child: Text(
-                          "ĐĂNG XUẤT",
+                          "ĐĂNG  XUẤT",
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',

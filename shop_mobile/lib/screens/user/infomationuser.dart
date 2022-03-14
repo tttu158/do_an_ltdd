@@ -1,43 +1,41 @@
-import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:do_an/api/api_account.dart';
 import 'package:do_an/models/account.dart';
 import 'package:do_an/screens/user/edit_user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class InfomationUser extends StatefulWidget {
-  final int id;
-  const InfomationUser({Key? key, required this.id}) : super(key: key);
+  final Account acc;
+  const InfomationUser({Key? key, required this.acc}) : super(key: key);
 
   @override
-  _InfomationUserState createState() => _InfomationUserState(this.id);
+  _InfomationUserState createState() => _InfomationUserState(this.acc);
 }
 
 class _InfomationUserState extends State<InfomationUser> {
-  final int id;
+  final Account acc;
   onGoBack(dynamic value) {
     setState(() {});
   }
 
-  _InfomationUserState(this.id);
+  _InfomationUserState(this.acc);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Account?>(
-      future: information(id),
+      future: information(acc.id!),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
             appBar: AppBar(
               title: Text("Chi tiết thông tin tài khoản"),
               backgroundColor: Colors.red,
-              leading: IconButton(
-                icon: Icon(Icons.keyboard_arrow_left),
-                onPressed: () {
-               Navigator.pushNamed(context, '/');
-                },
+              
               ),
-            ),
+            
             body: SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
@@ -81,11 +79,18 @@ class _InfomationUserState extends State<InfomationUser> {
                         decoration: BoxDecoration(
                             border: Border.all(),
                             shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250"),
-                            )),
+                            ),
+                            child: CachedNetworkImage(
+                                imageUrl: "http://10.0.2.2:8000/storage/" +
+                                    acc.avatar.toString(),
+                                width: 100,
+                                placeholder: (context, url) => const Center(
+                                  child: CupertinoActivityIndicator(),
+                                ),
+                                errorWidget: (context, url, error) => Container(
+                                  color: Colors.black12,
+                                ),
+                              ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -122,7 +127,7 @@ class _InfomationUserState extends State<InfomationUser> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          EditUser(id: id))).then((onGoBack));
+                                          EditUser(id: acc.id!))).then((onGoBack));
                             },
                           ),
                   ],),
@@ -147,7 +152,7 @@ class _InfomationUserState extends State<InfomationUser> {
                           ),
                           
                           Text(
-                            snapshot.data?.fullName ?? "Trống",
+                            acc.fullName ?? "Trống",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -193,7 +198,7 @@ class _InfomationUserState extends State<InfomationUser> {
                             height: 50,
                           ),
                           Text(
-                            snapshot.data?.birthday ?? "Chưa có",
+                          acc.birthday ?? "Chưa có",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -239,7 +244,7 @@ class _InfomationUserState extends State<InfomationUser> {
                             height: 40,
                           ),
                           Text(
-                            snapshot.data?.email ?? "",
+                         acc.email ?? "",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -268,7 +273,7 @@ class _InfomationUserState extends State<InfomationUser> {
                           Column(
                             children: [
                               Text(
-                                snapshot.data?.address ?? "",
+                             acc.address ?? "",
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                             ],
