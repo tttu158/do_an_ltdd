@@ -1,6 +1,6 @@
 import 'package:do_an/bottom_navigator/category.dart';
 import 'package:do_an/bottom_navigator/home.dart';
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 import 'package:do_an/screens/user/detailuser.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +19,12 @@ class _BottomState extends State<Bottom> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      HomePage(),
-      CategoryScreen(),
+      HomePage(
+        acc: acc,
+      ),
+      CategoryScreen(
+        acc: acc,
+      ),
       DetailUser(
         acc: acc,
       ),

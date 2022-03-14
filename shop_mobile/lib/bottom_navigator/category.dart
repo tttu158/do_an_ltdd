@@ -1,17 +1,24 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:do_an/api/api_category.dart';
+import 'package:do_an/models/account_model.dart';
+import 'package:do_an/models/category_model.dart';
+import 'package:do_an/models/sub_category_model.dart';
+import 'package:do_an/screens/products/by_category.dart';
+import 'package:do_an/screens/products/by_sub_category.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
-
+  CategoryScreen({Key? key, required this.acc}) : super(key: key);
+  Account acc;
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  _CategoryScreenState createState() => _CategoryScreenState(this.acc);
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
   int selectedIndex = 0;
-
+  _CategoryScreenState(this.acc);
+  final Account acc;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,69 +26,108 @@ class _CategoryScreenState extends State<CategoryScreen> {
         title: const Align(child: Text("Danh mục")),
         backgroundColor: Colors.redAccent,
       ),
-      body: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
+      body: Row(mainAxisSize: MainAxisSize.min, children: [
+        Container(
             width: 100,
-            child: ListView.builder(
-              itemCount: lstBrand.length,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                child: Container(
-                  height: 50,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                  ),
-                  child: Text(
-                    lstBrand[index].brand,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: 311,
-            child: ListView.builder(
-                itemCount: lstBrand.length,
-                itemBuilder: (context, index) {
-                  BRD brd = lstBrand[index];
-                  bool selected = selectedIndex == index;
-                  if (selected) {
-                    return subBrand(brd.subBrand);
+            child: FutureBuilder<List<Category>>(
+                future: fetchCategory(),
+                builder: (context, snap) {
+                  if (snap.hasError) {
+                    return Center(child: Text(snap.hasError.toString()));
                   }
-                  return invisbleSubBrand();
-                }),
-          )
-        ],
-      ),
+                  return snap.hasData
+                      ? ListView.builder(
+                          itemCount: snap.data!.length,
+                          itemBuilder: (context, index) => InkWell(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = index;
+                                });
+                              },
+                              onDoubleTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ByCategory(
+                                              id: snap.data![index].id!,
+                                              name: snap.data![index].name!,
+                                              acc: acc,
+                                            )));
+                              },
+                              child: Container(
+                                height: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: "http://10.0.2.2:8000/storage/" +
+                                      snap.data![index].image!,
+                                  placeholder: (context, url) => const Center(
+                                    child: CupertinoActivityIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                    color: Colors.black12,
+                                  ),
+                                ),
+                              )))
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                })),
+        Container(
+            width: 310,
+            child: FutureBuilder<List<Category>>(
+                future: fetchCategory(),
+                builder: (context, snap) {
+                  if (snap.hasError) {
+                    return Center(child: Text(snap.hasError.toString()));
+                  }
+                  return snap.hasData
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: snap.data!.length,
+                          itemBuilder: (context, index) {
+                            bool selected = selectedIndex == index;
+                            if (selected) {
+                              return buildSubCategory(snap.data![index].sub!);
+                            }
+                            return invisblesubCategory();
+                          })
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                }))
+      ]),
     );
   }
 
-  Widget subBrand(List<String> subNames) {
+  Widget buildSubCategory(List<SubCategory> sub) {
     return Container(
       height: 250,
       alignment: Alignment.center,
       child: ListView.builder(
-          itemCount: subNames.length,
+          itemCount: sub.length,
           itemBuilder: (context, index) {
-            String subBrand = subNames[index];
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BySubCategory(
+                              id: sub[index].id!,
+                              name: sub[index].name!,
+                              acc: acc,
+                            )));
+              },
               child: Container(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   border: Border.all(),
                 ),
                 child: Text(
-                  subBrand,
+                  sub[index].name!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(),
                 ),
@@ -91,44 +137,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 
-  Widget invisbleSubBrand() {
+  Widget invisblesubCategory() {
     return Container(
-      height: 45,
+      height: 50,
     );
   }
-
-  List<BRD> lstBrand = [
-    BRD("Asus", [
-      "Asus ROG Gaming series",
-      "Asus TUF Gaming Series",
-      "Asus Zephyrus Gaming",
-      "Laptop Asus Zenbook",
-      "Laptop Asus Vivobook",
-      "Laptop Asus ExpertBook",
-      "Laptop Asus ProArt"
-    ]),
-    BRD("MSI", [
-      "MSI Gaming GF Series",
-      "MSI GE Series",
-      "MSI Modern 14 Series",
-      "MSI Prestige Series",
-      "MSI Stealth 15 Series",
-      "MSI Bravo Series"
-    ]),
-    BRD("Lenovo", [
-      "Laptop Lenovo ThinkPad",
-      "Laptop Lenovo IdeaPad",
-      "Laptop Lenovo Yoga",
-      "Laptop Lenovo Legion",
-      "Laptop Lenovo ThinkBook",
-      "Lenovo ideapad gaming 3",
-      "Laptop Lenovo V15"
-    ]),
-  ];
-}
-
-class BRD {
-  final String brand;
-  final List<String> subBrand;
-  BRD(this.brand, this.subBrand);
 }

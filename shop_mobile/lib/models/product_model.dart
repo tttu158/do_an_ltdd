@@ -1,4 +1,4 @@
-import 'package:do_an/models/img.dart';
+import 'package:do_an/models/img_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.g.dart';
@@ -51,5 +51,5 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProductToJson(this);
+  //Map<String, dynamic> toJson() =>_$ProductToJson(this);
 }

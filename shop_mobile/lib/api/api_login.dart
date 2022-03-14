@@ -1,8 +1,8 @@
 import 'package:do_an/bottom_navigator/bottom.dart';
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 

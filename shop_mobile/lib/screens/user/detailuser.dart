@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 import 'package:do_an/screens/start.dart';
 import 'package:do_an/screens/user/infomationuser.dart';
 import 'package:do_an/screens/user/tabgoods.dart';

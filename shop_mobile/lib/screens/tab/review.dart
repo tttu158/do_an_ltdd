@@ -5,25 +5,27 @@ import 'package:do_an/models/invoice_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 
-class Canceledgoods extends StatefulWidget {
-  Canceledgoods({Key? key, required this.id}) : super(key: key);
+class ReviewTab extends StatefulWidget {
+  ReviewTab({Key? key, required this.id}) : super(key: key);
   int id;
   @override
   _OrderDetailState createState() => _OrderDetailState(this.id);
 }
 
-class _OrderDetailState extends State<Canceledgoods> {
+class _OrderDetailState extends State<ReviewTab> {
+  double rating = 0.0;
+  final txtComent = TextEditingController();
   int id;
   _OrderDetailState(this.id);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Invoice>>(
-          future: fetchInvoice(id, 5),
+          future: fetchInvoice(id, 3),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -97,9 +99,26 @@ class _OrderDetailState extends State<Canceledgoods> {
                                 Icon(Icons.pending),
                                 SizedBox(width: 5),
                                 Text(
-                                  "Đã hủy",
-                                  style: TextStyle(color: Colors.red),
+                                  "Chờ đánh giá",
+                                  style: TextStyle(color: Colors.green),
                                 ),
+                                SizedBox(width: 150),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      showRating(
+                                          id,
+                                          snapshot.data![index]
+                                              .detail![indexDetail].prd!.id,
+                                          rating,
+                                          txtComent,
+                                          snapshot.data![index].id);
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.red),
+                                    ),
+                                    child: Text("Đánh giá")),
                               ],
                             ),
                             Divider(
@@ -146,4 +165,45 @@ class _OrderDetailState extends State<Canceledgoods> {
           }),
     );
   }
+
+  void showRating(acc, prd, rating, TextEditingController comment, id) =>
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Bình luận và đánh giá"),
+                content: Column(
+                  children: [
+                    RatingBar.builder(
+                        minRating: 1,
+                        itemSize: 30,
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 10),
+                        itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.red,
+                            ),
+                        updateOnDrag: true,
+                        onRatingUpdate: (newRating) {
+                          setState(() {
+                            rating = newRating;
+                          });
+                        }),
+                    TextField(
+                      decoration: InputDecoration(hintText: 'Bình luận'),
+                      controller: comment,
+                    )
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () async {
+                        bool ischeck =
+                            await createRV(acc, prd, rating, comment.text, id);
+                        if (ischeck) {
+                          Navigator.pop(context);
+                          (context as Element).reassemble();
+                        }
+                      },
+                      child: Text("OK"))
+                ],
+              ));
 }

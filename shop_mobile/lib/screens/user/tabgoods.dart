@@ -1,8 +1,9 @@
 
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 import 'package:do_an/screens/tab/beingtransported.dart';
 import 'package:do_an/screens/tab/canceledgoods.dart';
 import 'package:do_an/screens/tab/delivered.dart';
+import 'package:do_an/screens/tab/review.dart';
 import 'package:do_an/screens/tab/tabconfirming.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class _TabgoodsState extends State<Tabgoods> {
               tabs: [
                 Tab(text: 'Chờ xác nhận'),
                 Tab(text: 'Đang giao'),
+                Tab(text: 'Chờ đánh giá'),
                 Tab(text: 'Đã giao'),
                 Tab(text: 'Đã hủy'),
               ],
@@ -48,14 +50,17 @@ class _TabgoodsState extends State<Tabgoods> {
           ),
           body: TabBarView(
             children: [
-              TabConfirming(
-               
+             TabConfirming(
+                id: acc.id!,
               ),
               BeingTransported(
-              
+                id: acc.id!,
               ),
-              Delivered(),
-              Canceledgoods(),
+              ReviewTab(
+                id: acc.id!,
+              ),
+              Delivered(id: acc.id!),
+              Canceledgoods(id: acc.id!),
             ],
           ),
         ),

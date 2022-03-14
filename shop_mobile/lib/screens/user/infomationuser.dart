@@ -1,7 +1,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:do_an/api/api_account.dart';
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 import 'package:do_an/screens/user/edit_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';

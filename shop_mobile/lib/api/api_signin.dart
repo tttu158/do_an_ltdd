@@ -1,7 +1,7 @@
 
 import 'package:do_an/screens/user/login.dart';
 import 'package:http/http.dart' as http;
-import 'package:do_an/models/account.dart';
+import 'package:do_an/models/account_model.dart';
 import 'package:flutter/material.dart';
 
 String urlLogin = 'http://10.0.2.2:8000/api/signin';
